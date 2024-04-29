@@ -1,0 +1,35 @@
+---
+title: "Shiny basics"
+author: "Maxi Estravis"
+date: today
+format: 
+  revealjs:
+    logo: UPSC_Logo_color_short.png
+    footer: "Tech Seminar May 2024"
+---
+
+## Morning
+- Turn off alarm
+- Get out of bed
+
+## Evening
+- Get in bed
+- Count sheep
+
+## Air Quality
+
+@fig-airquality further explores the impact of temperature on ozone level.
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Code"
+#| label: fig-airquality
+#| fig-cap: "Temperature and ozone level."
+#| warning: false
+
+library(ggplot2)
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```

@@ -2,10 +2,11 @@
 title: "Shiny basics"
 author: "Maxi Estravis"
 date: today
-format: 
+format:
   revealjs:
     logo: UPSC_Logo_color_short.png
     footer: "Tech Seminar May 2024"
+    css: logo.css
 ---
 
 ## Morning

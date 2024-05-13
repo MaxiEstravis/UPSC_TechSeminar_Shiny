@@ -7,30 +7,65 @@ format:
     logo: UPSC_Logo_color_short.png
     footer: "Tech Seminar May 2024"
     css: logo.css
+    chalkboard: true
+    theme: moon
+    auto-stretch: false
 ---
 
-## Morning
-- Turn off alarm
-- Get out of bed
+## What is Shiny?
+:::: {.columns}
+
+::: {.column width="60%"}
+- R package for creating web apps and interactive documents
+- Examples:
+  - Link to [this](somewhere.com)
+:::
+
+::: {.column width="40%"}
+![](shiny.png){width="90%"}
+:::
+
+::::
+
+
 
 ## Evening
 - Get in bed
 - Count sheep
 
-## Air Quality
+## Basic structure
 
-@fig-airquality further explores the impact of temperature on ozone level.
+```{.r code-line-numbers="|1|2|3|4"}
+library("shiny")
+ui <- fluidPage()
+server <- function(input,output) {}
+shinyApp(ui=ui,server=server)
+```
 
-```{r}
-#| echo: true
-#| code-fold: true
-#| code-summary: "Code"
-#| label: fig-airquality
-#| fig-cap: "Temperature and ozone level."
-#| warning: false
 
-library(ggplot2)
-ggplot(airquality, aes(Temp, Ozone)) + 
-  geom_point() + 
-  geom_smooth(method = "loess")
+## Inputs examples
+
+```{.r}
+ui=fluidPage(
+    fluidRow(
+      column(4,
+             fileInput("file-input","fileInput:"),
+             selectInput("select-input",label="selectInput",choices=c("A","B","C")),
+             numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
+             sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
+             textInput("text-input",label="textInput"),
+             textAreaInput("text-area-input",label="textAreaInput"),
+             dateInput("date-input",label="dateInput"),
+             dateRangeInput("date-range-input",label="dateRangeInput"),
+             radioButtons("radio-button",label="radioButtons",choices=c("A","B","C"),inline=T),
+             checkboxInput("checkbox","checkboxInput",value=FALSE),
+             actionButton("action-button","Action"),
+             hr(),
+             submitButton()
+      )
+    )
+  )
+  server=function(input,output) {
+  }
+shinyApp(ui=ui,server=server)
 ```

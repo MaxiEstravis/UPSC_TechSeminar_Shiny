@@ -19,7 +19,6 @@ format:
 - R package for creating web apps and interactive documents
 - [Basic examples](https://shiny.posit.co/r/gallery/)
 - Concept of **reactivity**
-- 
 :::
 
 ::: {.column width="40%"}
@@ -52,7 +51,7 @@ shinyApp(ui=ui,server=server)
 
 ## Different input types
 
-See `examples/00-input_types.r`
+See `examples/00_input-types.r`
 
 ```{.r}
 ui=fluidPage(

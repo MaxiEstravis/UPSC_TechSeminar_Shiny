@@ -4,7 +4,7 @@ author: "Maxi Estravis"
 date: today
 format:
   revealjs:
-    logo: UPSC_Logo_color_short.png
+    logo: UPSC Logo_white outlines_colored leaves_short.png
     footer: "Tech Seminar May 2024"
     css: logo.css
     chalkboard: true
@@ -17,8 +17,9 @@ format:
 
 ::: {.column width="60%"}
 - R package for creating web apps and interactive documents
-- Examples:
-  - Link to [this](somewhere.com)
+- [Basic examples](https://shiny.posit.co/r/gallery/)
+- Concept of **reactivity**
+- 
 :::
 
 ::: {.column width="40%"}
@@ -28,44 +29,86 @@ format:
 ::::
 
 
-
-## Evening
-- Get in bed
-- Count sheep
-
 ## Basic structure
 
-```{.r code-line-numbers="|1|2|3|4"}
+```{.r code-line-numbers="|1|2|3|4|"}
 library("shiny")
 ui <- fluidPage()
 server <- function(input,output) {}
 shinyApp(ui=ui,server=server)
 ```
 
+::: {.r-fit-text}
+::: {.incremental}
+- `ui` function ("Front-end")
+  - Controls the layout and appearance of the app
+  - Sets up both inputs and outputs
+- `server` function ("Back-end")
+  - Instructions for processing inputs and generating outputs
+- `shinyApp` call
+  - Creates the app from the UI/Server pair
+:::
+:::
 
-## Inputs examples
+## Different input types
+
+See `examples/00-input_types.r`
 
 ```{.r}
 ui=fluidPage(
-    fluidRow(
-      column(4,
-             fileInput("file-input","fileInput:"),
-             selectInput("select-input",label="selectInput",choices=c("A","B","C")),
-             numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
-             sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
-             textInput("text-input",label="textInput"),
-             textAreaInput("text-area-input",label="textAreaInput"),
-             dateInput("date-input",label="dateInput"),
-             dateRangeInput("date-range-input",label="dateRangeInput"),
-             radioButtons("radio-button",label="radioButtons",choices=c("A","B","C"),inline=T),
-             checkboxInput("checkbox","checkboxInput",value=FALSE),
-             actionButton("action-button","Action"),
-             hr(),
-             submitButton()
-      )
-    )
-  )
-  server=function(input,output) {
-  }
+  titlePanel("Example - Different input types"),
+  sidebarLayout(
+    sidebarPanel(
+             fileInput("file-input", label="File Input"),
+             selectInput("select-input", label="Select Input", choices=c("A","B","C")),
+             numericInput("numeric-input",label="Numeric Input", value=5, min=1, max=10),
+             sliderInput("slider-input", label="Slider Input", value=5, min=1, max=10),
+             textInput("text-input", label="Text Input"),
+             textAreaInput("text-area-input", label="Text Area Input"),
+             dateInput("date-input", label="Date Input"),
+             dateRangeInput("date-range-input", label="Date Range Input"),
+             radioButtons("radio-button", label="Radio Buttons", choices=c("A","B","C"), inline=T),
+             checkboxInput("checkbox", label="Checkbox Input", value=FALSE),
+             actionButton("action-button","Action Button")),
+    mainPanel()
+  ))
+
+server=function(input,output) {}
+
 shinyApp(ui=ui,server=server)
 ```
+
+## Different output types
+
+See `examples/01_output-types.r`
+
+```{.r}
+shinyApp(
+  ui=fluidPage(
+    titlePanel("Example - Different output types"),
+    sidebarLayout(
+      sidebarPanel(
+        textInput("text_output",label="Text input", value="Type text here")
+      ),
+      mainPanel(
+        verbatimTextOutput("verbatim_text_output"),
+        tableOutput("table_output"),
+        plotOutput("plot_output",width="400px",height="400px")))),
+  server=function(input, output) {
+    output$text_output <- renderText({input$text_output})
+    output$verbatim_text_output <- renderText({input$text_output})
+    output$table_output <- renderTable({mtcars[1:10,1:6]})
+    output$plot_output <- renderPlot({plot(mtcars[,1],mtcars[,6],main = input$text_output)})
+  })
+```
+
+## Resources: Everything I know about Shiny
+
+::: {.incremental}
+- [RaukR summer school](https://nbisweden.github.io/raukr-2024/) by NBIS and SciLife Lab
+- [Mastering Shiny](https://mastering-shiny.org/index.html) by *the man himself*, Hadley Wickham
+- [Posit's Shiny tutorial](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html)
+- Stack Overflow
+- ChatGPT
+:::
+

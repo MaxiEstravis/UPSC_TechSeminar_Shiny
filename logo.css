@@ -1,11 +1,11 @@
 .reveal .slide-logo {
-  height: 100px !important;
-  width: 100px !important;
+  height: 80px !important;
+  width: 80px !important;
   max-width: unset !important;
   max-height: unset !important;
 }
 
 .reveal .footer {
-  font-size: 0.8em !important;
+  font-size: 0.5em !important;
   text-align: center !important;
 }

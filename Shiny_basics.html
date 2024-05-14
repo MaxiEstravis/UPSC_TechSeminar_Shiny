@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Maxi Estravis">
-  <meta name="dcterms.date" content="2024-05-13">
+  <meta name="dcterms.date" content="2024-05-14">
   <title>Shiny basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -404,7 +404,7 @@ Maxi Estravis
 </div>
 </div>
 
-  <p class="date">2024-05-13</p>
+  <p class="date">2024-05-14</p>
 </section>
 <section id="what-is-shiny" class="slide level2">
 <h2>What is Shiny?</h2>
@@ -412,55 +412,99 @@ Maxi Estravis
 <div class="column" style="width:60%;">
 <ul>
 <li>R package for creating web apps and interactive documents</li>
-<li>Examples:
-<ul>
-<li>Link to <a href="somewhere.com">this</a></li>
-</ul></li>
+<li><a href="https://shiny.posit.co/r/gallery/">Basic examples</a></li>
+<li>Concept of <strong>reactivity</strong></li>
+<li></li>
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="shiny.png" style="width:90.0%"></p>
 </div>
 </div>
 </section>
-<section id="evening" class="slide level2">
-<h2>Evening</h2>
-<ul>
-<li>Get in bed</li>
-<li>Count sheep</li>
-</ul>
-</section>
 <section id="basic-structure" class="slide level2">
 <h2>Basic structure</h2>
-<div class="sourceCode" id="cb1" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(<span class="st">"shiny"</span>)</span>
+<div class="sourceCode" id="cb1" data-code-line-numbers="|1|2|3|4|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(<span class="st">"shiny"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>()</span>
 <span id="cb1-3"><a href="#cb1-3"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input,output) {}</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="r-fit-text">
+<div>
+<ul>
+<li class="fragment"><code>ui</code> function (“Front-end”)
+<ul>
+<li class="fragment">Controls the layout and appearance of the app</li>
+<li class="fragment">Sets up both inputs and outputs</li>
+</ul></li>
+<li class="fragment"><code>server</code> function (“Back-end”)
+<ul>
+<li class="fragment">Instructions for processing inputs and generating outputs</li>
+</ul></li>
+<li class="fragment"><code>shinyApp</code> call
+<ul>
+<li class="fragment">Creates the app from the UI/Server pair</li>
+</ul></li>
+</ul>
+</div>
+</div>
 </section>
-<section id="inputs-examples" class="slide level2">
-<h2>Inputs examples</h2>
+<section id="different-input-types" class="slide level2">
+<h2>Different input types</h2>
+<p>See <code>examples/00-input_types.r</code></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>ui<span class="ot">=</span><span class="fu">fluidPage</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="fu">fluidRow</span>(</span>
-<span id="cb2-3"><a href="#cb2-3"></a>      <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>             <span class="fu">fileInput</span>(<span class="st">"file-input"</span>,<span class="st">"fileInput:"</span>),</span>
-<span id="cb2-5"><a href="#cb2-5"></a>             <span class="fu">selectInput</span>(<span class="st">"select-input"</span>,<span class="at">label=</span><span class="st">"selectInput"</span>,<span class="at">choices=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)),</span>
-<span id="cb2-6"><a href="#cb2-6"></a>             <span class="fu">numericInput</span>(<span class="st">"numeric-input"</span>,<span class="at">label=</span><span class="st">"numericInput"</span>,<span class="at">value=</span><span class="dv">5</span>,<span class="at">min=</span><span class="dv">1</span>,<span class="at">max=</span><span class="dv">10</span>),</span>
-<span id="cb2-7"><a href="#cb2-7"></a>             <span class="fu">sliderInput</span>(<span class="st">"slider-input"</span>,<span class="at">label=</span><span class="st">"sliderInput"</span>,<span class="at">value=</span><span class="dv">5</span>,<span class="at">min=</span><span class="dv">1</span>,<span class="at">max=</span><span class="dv">10</span>),</span>
-<span id="cb2-8"><a href="#cb2-8"></a>             <span class="fu">textInput</span>(<span class="st">"text-input"</span>,<span class="at">label=</span><span class="st">"textInput"</span>),</span>
-<span id="cb2-9"><a href="#cb2-9"></a>             <span class="fu">textAreaInput</span>(<span class="st">"text-area-input"</span>,<span class="at">label=</span><span class="st">"textAreaInput"</span>),</span>
-<span id="cb2-10"><a href="#cb2-10"></a>             <span class="fu">dateInput</span>(<span class="st">"date-input"</span>,<span class="at">label=</span><span class="st">"dateInput"</span>),</span>
-<span id="cb2-11"><a href="#cb2-11"></a>             <span class="fu">dateRangeInput</span>(<span class="st">"date-range-input"</span>,<span class="at">label=</span><span class="st">"dateRangeInput"</span>),</span>
-<span id="cb2-12"><a href="#cb2-12"></a>             <span class="fu">radioButtons</span>(<span class="st">"radio-button"</span>,<span class="at">label=</span><span class="st">"radioButtons"</span>,<span class="at">choices=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>),<span class="at">inline=</span>T),</span>
-<span id="cb2-13"><a href="#cb2-13"></a>             <span class="fu">checkboxInput</span>(<span class="st">"checkbox"</span>,<span class="st">"checkboxInput"</span>,<span class="at">value=</span><span class="cn">FALSE</span>),</span>
-<span id="cb2-14"><a href="#cb2-14"></a>             <span class="fu">actionButton</span>(<span class="st">"action-button"</span>,<span class="st">"Action"</span>),</span>
-<span id="cb2-15"><a href="#cb2-15"></a>             <span class="fu">hr</span>(),</span>
-<span id="cb2-16"><a href="#cb2-16"></a>             <span class="fu">submitButton</span>()</span>
-<span id="cb2-17"><a href="#cb2-17"></a>      )</span>
-<span id="cb2-18"><a href="#cb2-18"></a>    )</span>
-<span id="cb2-19"><a href="#cb2-19"></a>  )</span>
-<span id="cb2-20"><a href="#cb2-20"></a>  server<span class="ot">=</span><span class="cf">function</span>(input,output) {</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  }</span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="UPSC_Logo_color_short.png" class="slide-logo"></p>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">titlePanel</span>(<span class="st">"Example - Different input types"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb2-5"><a href="#cb2-5"></a>             <span class="fu">fileInput</span>(<span class="st">"file-input"</span>, <span class="at">label=</span><span class="st">"File Input"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>             <span class="fu">selectInput</span>(<span class="st">"select-input"</span>, <span class="at">label=</span><span class="st">"Select Input"</span>, <span class="at">choices=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>             <span class="fu">numericInput</span>(<span class="st">"numeric-input"</span>,<span class="at">label=</span><span class="st">"Numeric Input"</span>, <span class="at">value=</span><span class="dv">5</span>, <span class="at">min=</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
+<span id="cb2-8"><a href="#cb2-8"></a>             <span class="fu">sliderInput</span>(<span class="st">"slider-input"</span>, <span class="at">label=</span><span class="st">"Slider Input"</span>, <span class="at">value=</span><span class="dv">5</span>, <span class="at">min=</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
+<span id="cb2-9"><a href="#cb2-9"></a>             <span class="fu">textInput</span>(<span class="st">"text-input"</span>, <span class="at">label=</span><span class="st">"Text Input"</span>),</span>
+<span id="cb2-10"><a href="#cb2-10"></a>             <span class="fu">textAreaInput</span>(<span class="st">"text-area-input"</span>, <span class="at">label=</span><span class="st">"Text Area Input"</span>),</span>
+<span id="cb2-11"><a href="#cb2-11"></a>             <span class="fu">dateInput</span>(<span class="st">"date-input"</span>, <span class="at">label=</span><span class="st">"Date Input"</span>),</span>
+<span id="cb2-12"><a href="#cb2-12"></a>             <span class="fu">dateRangeInput</span>(<span class="st">"date-range-input"</span>, <span class="at">label=</span><span class="st">"Date Range Input"</span>),</span>
+<span id="cb2-13"><a href="#cb2-13"></a>             <span class="fu">radioButtons</span>(<span class="st">"radio-button"</span>, <span class="at">label=</span><span class="st">"Radio Buttons"</span>, <span class="at">choices=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>), <span class="at">inline=</span>T),</span>
+<span id="cb2-14"><a href="#cb2-14"></a>             <span class="fu">checkboxInput</span>(<span class="st">"checkbox"</span>, <span class="at">label=</span><span class="st">"Checkbox Input"</span>, <span class="at">value=</span><span class="cn">FALSE</span>),</span>
+<span id="cb2-15"><a href="#cb2-15"></a>             <span class="fu">actionButton</span>(<span class="st">"action-button"</span>,<span class="st">"Action Button"</span>)),</span>
+<span id="cb2-16"><a href="#cb2-16"></a>    <span class="fu">mainPanel</span>()</span>
+<span id="cb2-17"><a href="#cb2-17"></a>  ))</span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a>server<span class="ot">=</span><span class="cf">function</span>(input,output) {}</span>
+<span id="cb2-20"><a href="#cb2-20"></a></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="different-output-types" class="slide level2">
+<h2>Different output types</h2>
+<p>See <code>examples/01_output-types.r</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">shinyApp</span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="at">ui=</span><span class="fu">fluidPage</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="fu">titlePanel</span>(<span class="st">"Example - Different output types"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb3-5"><a href="#cb3-5"></a>      <span class="fu">sidebarPanel</span>(</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        <span class="fu">textInput</span>(<span class="st">"text_output"</span>,<span class="at">label=</span><span class="st">"Text input"</span>, <span class="at">value=</span><span class="st">"Type text here"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>      ),</span>
+<span id="cb3-8"><a href="#cb3-8"></a>      <span class="fu">mainPanel</span>(</span>
+<span id="cb3-9"><a href="#cb3-9"></a>        <span class="fu">verbatimTextOutput</span>(<span class="st">"verbatim_text_output"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        <span class="fu">tableOutput</span>(<span class="st">"table_output"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11"></a>        <span class="fu">plotOutput</span>(<span class="st">"plot_output"</span>,<span class="at">width=</span><span class="st">"400px"</span>,<span class="at">height=</span><span class="st">"400px"</span>)))),</span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="at">server=</span><span class="cf">function</span>(input, output) {</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    output<span class="sc">$</span>text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    output<span class="sc">$</span>verbatim_text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]})</span>
+<span id="cb3-16"><a href="#cb3-16"></a>    output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>],<span class="at">main =</span> input<span class="sc">$</span>text_output)})</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="resources-everything-i-know-about-shiny" class="slide level2">
+<h2>Resources: Everything I know about Shiny</h2>
+<div>
+<ul>
+<li class="fragment"><a href="https://nbisweden.github.io/raukr-2024/">RaukR summer school</a> by NBIS and SciLife Lab</li>
+<li class="fragment"><a href="https://mastering-shiny.org/index.html">Mastering Shiny</a> by <em>the man himself</em>, Hadley Wickham</li>
+<li class="fragment"><a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html">Posit’s Shiny tutorial</a></li>
+<li class="fragment">Stack Overflow</li>
+<li class="fragment">ChatGPT</li>
+</ul>
+</div>
+<p><img src="UPSC Logo_white outlines_colored leaves_short.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p>Tech Seminar May 2024</p>
 </div>

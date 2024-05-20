@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Maxi Estravis">
-  <meta name="dcterms.date" content="2024-05-14">
+  <meta name="dcterms.date" content="2024-05-29">
   <title>Shiny basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -404,17 +404,19 @@ Maxi Estravis
 </div>
 </div>
 
-  <p class="date">2024-05-14</p>
+  <p class="date">2024-05-29</p>
 </section>
 <section id="what-is-shiny" class="slide level2">
 <h2>What is Shiny?</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
+<div>
 <ul>
-<li>R package for creating web apps and interactive documents</li>
-<li><a href="https://shiny.posit.co/r/gallery/">Basic examples</a></li>
-<li>Concept of <strong>reactivity</strong></li>
+<li class="fragment">R package for creating web apps and interactive documents</li>
+<li class="fragment"><a href="https://shiny.posit.co/r/gallery/">Basic examples</a></li>
+<li class="fragment">Concept of <strong>reactivity</strong></li>
 </ul>
+</div>
 </div><div class="column" style="width:40%;">
 <p><img data-src="shiny.png" style="width:90.0%"></p>
 </div>
@@ -422,11 +424,10 @@ Maxi Estravis
 </section>
 <section id="basic-structure" class="slide level2">
 <h2>Basic structure</h2>
-<div class="sourceCode" id="cb1" data-code-line-numbers="|1|2|3|4|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(<span class="st">"shiny"</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(<span class="st">"shiny"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>()</span>
 <span id="cb1-3"><a href="#cb1-3"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input,output) {}</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="r-fit-text">
 <div>
 <ul>
 <li class="fragment"><code>ui</code> function (“Front-end”)
@@ -440,11 +441,24 @@ Maxi Estravis
 </ul></li>
 <li class="fragment"><code>shinyApp</code> call
 <ul>
-<li class="fragment">Creates the app from the UI/Server pair</li>
+<li class="fragment">Creates the app from the <code>ui</code> / <code>server</code> pair</li>
 </ul></li>
 </ul>
 </div>
-</div>
+<aside class="notes">
+<p>This is the “single file” approach. <code>ui</code> and <code>server</code> could also be two separate R files in a directory.</p>
+<p>Also, the <code>ui</code> and <code>server</code> can be defined in the <code>shinyApp</code> call itself, for example in <code>examples/01_output-types.r</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="different-input-types" class="slide level2">
 <h2>Different input types</h2>
@@ -470,27 +484,110 @@ Maxi Estravis
 <span id="cb2-19"><a href="#cb2-19"></a>server<span class="ot">=</span><span class="cf">function</span>(input,output) {}</span>
 <span id="cb2-20"><a href="#cb2-20"></a></span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Built-in input widgets. Each one has a name, quoted in this first definition, followed by other arguments.</p>
+<p>Some typical arguments: label (what the user sees), default values.</p>
+<p>In the <code>server</code> function, these inputs are called by name without quoting.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="different-output-types" class="slide level2">
-<h2>Different output types</h2>
+<section id="different-output-types-and-basic-reactivity" class="slide level2">
+<h2>Different output types and basic reactivity</h2>
 <p>See <code>examples/01_output-types.r</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">shinyApp</span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="at">ui=</span><span class="fu">fluidPage</span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="fu">titlePanel</span>(<span class="st">"Example - Different output types"</span>),</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb3-5"><a href="#cb3-5"></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb3-6"><a href="#cb3-6"></a>        <span class="fu">textInput</span>(<span class="st">"text_output"</span>,<span class="at">label=</span><span class="st">"Text input"</span>, <span class="at">value=</span><span class="st">"Type text here"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>      ),</span>
-<span id="cb3-8"><a href="#cb3-8"></a>      <span class="fu">mainPanel</span>(</span>
-<span id="cb3-9"><a href="#cb3-9"></a>        <span class="fu">verbatimTextOutput</span>(<span class="st">"verbatim_text_output"</span>),</span>
-<span id="cb3-10"><a href="#cb3-10"></a>        <span class="fu">tableOutput</span>(<span class="st">"table_output"</span>),</span>
-<span id="cb3-11"><a href="#cb3-11"></a>        <span class="fu">plotOutput</span>(<span class="st">"plot_output"</span>,<span class="at">width=</span><span class="st">"400px"</span>,<span class="at">height=</span><span class="st">"400px"</span>)))),</span>
-<span id="cb3-12"><a href="#cb3-12"></a>  <span class="at">server=</span><span class="cf">function</span>(input, output) {</span>
-<span id="cb3-13"><a href="#cb3-13"></a>    output<span class="sc">$</span>text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
-<span id="cb3-14"><a href="#cb3-14"></a>    output<span class="sc">$</span>verbatim_text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
-<span id="cb3-15"><a href="#cb3-15"></a>    output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]})</span>
-<span id="cb3-16"><a href="#cb3-16"></a>    output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>],<span class="at">main =</span> input<span class="sc">$</span>text_output)})</span>
-<span id="cb3-17"><a href="#cb3-17"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(<span class="st">"shiny"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">shinyApp</span>(</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">ui=</span><span class="fu">fluidPage</span>(</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="fu">titlePanel</span>(<span class="st">"Example - Different output types"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb3-7"><a href="#cb3-7"></a>      <span class="fu">sidebarPanel</span>(</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="fu">textInput</span>(<span class="st">"text_output"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9"></a>                  <span class="at">label=</span><span class="st">"Text input"</span>, </span>
+<span id="cb3-10"><a href="#cb3-10"></a>                  <span class="at">value=</span><span class="st">"Type text here"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11"></a>        <span class="fu">selectInput</span>(<span class="st">"select_align"</span>, </span>
+<span id="cb3-12"><a href="#cb3-12"></a>                    <span class="at">label=</span><span class="st">"Select column alignment"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13"></a>                    <span class="at">choices=</span><span class="fu">c</span>(<span class="st">"l"</span>,<span class="st">"c"</span>,<span class="st">"r"</span>))</span>
+<span id="cb3-14"><a href="#cb3-14"></a>      ),</span>
+<span id="cb3-15"><a href="#cb3-15"></a>      <span class="fu">mainPanel</span>(</span>
+<span id="cb3-16"><a href="#cb3-16"></a>        <span class="fu">verbatimTextOutput</span>(<span class="st">"verbatim_text_output"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17"></a>        <span class="fu">tableOutput</span>(<span class="st">"table_output"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18"></a>        <span class="fu">plotOutput</span>(<span class="st">"plot_output"</span>,<span class="at">width=</span><span class="st">"400px"</span>,<span class="at">height=</span><span class="st">"400px"</span>)))),</span>
+<span id="cb3-19"><a href="#cb3-19"></a>  <span class="at">server=</span><span class="cf">function</span>(input, output) {</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    output<span class="sc">$</span>verbatim_text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]}, </span>
+<span id="cb3-22"><a href="#cb3-22"></a>                                        <span class="at">align =</span> <span class="fu">reactive</span>({input<span class="sc">$</span>select_align}), </span>
+<span id="cb3-23"><a href="#cb3-23"></a>                                        <span class="at">width =</span> <span class="st">"200%"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>], <span class="at">main =</span> input<span class="sc">$</span>text_output)}, </span>
+<span id="cb3-25"><a href="#cb3-25"></a>                                     <span class="at">width =</span> <span class="dv">1000</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>As with the inputs, there are pre-built widgets for outputs. Also, they have a name by which they are referred to later, in the <code>server</code> function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="basic-reactivity" class="slide level2">
+<h2>Basic reactivity</h2>
+<p>Excerpt from <code>examples/01_output-types.r</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>      {mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]}, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>      <span class="at">align =</span> <span class="fu">reactive</span>({input<span class="sc">$</span>select_align}), </span>
+<span id="cb4-4"><a href="#cb4-4"></a>      <span class="at">width =</span> <span class="st">"200%"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>(</span>
+<span id="cb4-7"><a href="#cb4-7"></a>      {<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>], <span class="at">main =</span> input<span class="sc">$</span>text_output)}, </span>
+<span id="cb4-8"><a href="#cb4-8"></a>      <span class="at">width =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+<ul>
+<li class="fragment"><code>render*()</code> functions take an expression (in <code>{}</code>) and other arguments</li>
+<li class="fragment">The expression in curly brackets is what’s going to be rendered (a valid table for <code>renderTable()</code>, a valid plot for <code>renderPlot()</code>, etc)</li>
+<li class="fragment">The other arguments, outside curly brackets, deal with the aspect properties of the object</li>
+</ul>
+</div>
+</section>
+<section id="basic-reactivity-1" class="slide level2">
+<h2>Basic reactivity</h2>
+<p>Excerpt from <code>examples/01_output-types.r</code></p>
+<div class="sourceCode" id="cb5" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>      {mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]}, </span>
+<span id="cb5-3"><a href="#cb5-3"></a>      <span class="at">align =</span> <span class="fu">reactive</span>({input<span class="sc">$</span>select_align}), </span>
+<span id="cb5-4"><a href="#cb5-4"></a>      <span class="at">width =</span> <span class="st">"200%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+<ul>
+<li class="fragment"><code>reactive()</code> expressions are calculated each time a widget input is changed</li>
+<li class="fragment">Same as the <code>render*</code> functions, they take an expression in curly brackets, plus optional arguments</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Let’s focus on this line.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="resources-everything-i-know-about-shiny" class="slide level2">
 <h2>Resources: Everything I know about Shiny</h2>
@@ -502,6 +599,13 @@ Maxi Estravis
 <li class="fragment">Stack Overflow</li>
 <li class="fragment">ChatGPT</li>
 </ul>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="end.png" style="width:50.0%"></p>
+</figure>
+</div>
 </div>
 <p><img src="UPSC Logo_white outlines_colored leaves_short.png" class="slide-logo"></p>
 <div class="footer footer-default">
@@ -535,14 +639,14 @@ Maxi Estravis
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
+'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'smaller': false,
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,

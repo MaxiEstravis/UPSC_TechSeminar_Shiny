@@ -1,2 +1,2 @@
 # UPSC_TechSeminar_Shiny
-Quarto presentation of UPSC Tech Seminar - May 2024
+Quarto presentation and examples for UPSC Tech Seminar - May 2024

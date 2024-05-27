@@ -510,7 +510,7 @@ Maxi Estravis
 <span id="cb3-5"><a href="#cb3-5"></a>    <span class="fu">titlePanel</span>(<span class="st">"Example - Different output types"</span>),</span>
 <span id="cb3-6"><a href="#cb3-6"></a>    <span class="fu">sidebarLayout</span>(</span>
 <span id="cb3-7"><a href="#cb3-7"></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb3-8"><a href="#cb3-8"></a>        <span class="fu">textInput</span>(<span class="st">"text_output"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="fu">textInput</span>(<span class="st">"text_input"</span>,</span>
 <span id="cb3-9"><a href="#cb3-9"></a>                  <span class="at">label=</span><span class="st">"Text input"</span>, </span>
 <span id="cb3-10"><a href="#cb3-10"></a>                  <span class="at">value=</span><span class="st">"Type text here"</span>),</span>
 <span id="cb3-11"><a href="#cb3-11"></a>        <span class="fu">selectInput</span>(<span class="st">"select_align"</span>, </span>
@@ -522,11 +522,11 @@ Maxi Estravis
 <span id="cb3-17"><a href="#cb3-17"></a>        <span class="fu">tableOutput</span>(<span class="st">"table_output"</span>),</span>
 <span id="cb3-18"><a href="#cb3-18"></a>        <span class="fu">plotOutput</span>(<span class="st">"plot_output"</span>,<span class="at">width=</span><span class="st">"400px"</span>,<span class="at">height=</span><span class="st">"400px"</span>)))),</span>
 <span id="cb3-19"><a href="#cb3-19"></a>  <span class="at">server=</span><span class="cf">function</span>(input, output) {</span>
-<span id="cb3-20"><a href="#cb3-20"></a>    output<span class="sc">$</span>verbatim_text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_output})</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    output<span class="sc">$</span>verbatim_text_output <span class="ot">&lt;-</span> <span class="fu">renderText</span>({input<span class="sc">$</span>text_input})</span>
 <span id="cb3-21"><a href="#cb3-21"></a>    output<span class="sc">$</span>table_output <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]}, </span>
 <span id="cb3-22"><a href="#cb3-22"></a>                                        <span class="at">align =</span> <span class="fu">reactive</span>({input<span class="sc">$</span>select_align}), </span>
 <span id="cb3-23"><a href="#cb3-23"></a>                                        <span class="at">width =</span> <span class="st">"200%"</span>)</span>
-<span id="cb3-24"><a href="#cb3-24"></a>    output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>], <span class="at">main =</span> input<span class="sc">$</span>text_output)}, </span>
+<span id="cb3-24"><a href="#cb3-24"></a>    output<span class="sc">$</span>plot_output <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({<span class="fu">plot</span>(mtcars[,<span class="dv">1</span>],mtcars[,<span class="dv">6</span>], <span class="at">main =</span> input<span class="sc">$</span>text_input)}, </span>
 <span id="cb3-25"><a href="#cb3-25"></a>                                     <span class="at">width =</span> <span class="dv">1000</span>)</span>
 <span id="cb3-26"><a href="#cb3-26"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">

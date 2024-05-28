@@ -22,5 +22,5 @@ shinyApp(
                                         align = reactive({input$select_align}), 
                                         width = "200%")
     output$plot_output <- renderPlot({plot(mtcars[,1],mtcars[,6], main = input$text_input)}, 
-                                     width = 1000)
+                                     bg = "lightgreen")
   })

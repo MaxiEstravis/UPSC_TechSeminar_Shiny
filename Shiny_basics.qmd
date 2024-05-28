@@ -97,8 +97,6 @@ In the `server` function, these inputs are called by name without quoting.
 See `examples/01_output-types.r`
 
 ```{.r}
-library("shiny")
-
 shinyApp(
   ui=fluidPage(
     titlePanel("Example - Different output types"),
@@ -141,7 +139,7 @@ output$table_output <- renderTable(
 
 output$plot_output <- renderPlot(
       {plot(mtcars[,1],mtcars[,6], main = input$text_output)}, 
-      width = 1000)
+      bg = "lightgreen")
 ```
 
 ::: {.incremental}
@@ -171,6 +169,95 @@ output$table_output <- renderTable(
 Let's focus on this line.
 :::
 
+## Controlling reactivity: the problem
+
+See `examples/02_uncontrolled-reactivity.r`
+
+```{.r code-line-numbers="|11-13"}
+ui=fluidPage(
+    titlePanel("Example - (Un)controlled reactivity"),
+    sidebarLayout(
+      sidebarPanel(
+        textInput("text_input", label="Text input", value="Type text here")),
+      mainPanel(
+        plotOutput("plot_output",width="400px",height="400px"))))
+
+server=function(input, output) {
+    output$plot_output <- renderPlot({
+      plot(mtcars[,1],mtcars[,6], main = input$text_input)
+      random_number <- sample(1:1000, 1)
+      legend("topright", legend = random_number, pch = 1)
+      })}
+
+shinyApp(ui=ui,server=server)
+```
+
+::: {.incremental}
+- `render*()` functions take (in curly brackets) as many lines as needed to create the plot, table, etc. This includes, for example, creating variables.
+- The plot is generated again each time inputs change (in this case, every letter added or deleted from the title). <span style="color:red">**Problem**</span> for big datasets
+:::
+
+::: {.notes}
+I added a random legend to show that the plot is computed again. Imagine a Manhattan plot or a heat map that takes seconds or minutes to plot.
+:::
+
+## Controlling reactivity: the solution
+
+See `examples/03_controlled-reactivity.r`
+
+```{.r}
+ui = fluidPage(
+  titlePanel("Example - Controlled reactivity"),
+  textInput("text_input", label = "Text input", value = "Type text here"),
+  actionButton("actButton", "Apply changes:"),
+  plotOutput("plot_output", width = 400, height = 400)
+)
+
+server = function(input, output) {
+  plot_data <- eventReactive(input$actButton, {
+    list(
+      plotTitle = input$text_input,
+      plotLegend = sample(1:1000, 1)
+    )
+  })
+  
+  output$plot_output <- renderPlot({
+    plot(mtcars[, 1], mtcars[, 6], main = plot_data()$plotTitle)
+    legend("topright", legend = plot_data()$plotLegend, pch = 1)
+  })
+}
+
+shinyApp(ui=ui, server=server)
+```
+
+It looks more complicated than it is...
+
+## Controlling reactivity: the solution
+
+Excerpt from `examples/03_controlled-reactivity.r`
+
+```{.r}
+plot_data <- eventReactive(input$actButton, {
+  list(
+    plotTitle = input$text_input,
+    plotLegend = sample(1:1000, 1)
+  )
+})
+```
+
+::: {.incremental}
+- `eventReactive()` takes an `eventExpr` and a `handlerExpr`
+  - The event to "wait for", and
+  - What to do then.
+- `plot_data` is called a *reactive expression*, and a list of attributes is created, which are updated when `actButton` is clicked
+- These attributes are then accessed in the plot call as `plot_data()$plotTitle` and `plot_data()$plotLegend`
+:::
+
+::: {.notes}
+`plot_data` is the name of the reactive expression object itself.
+
+`plot_data()` invokes the reactive expression, recalculating it based on the latest state of its dependencies (for example the action button).
+:::
 
 ## Resources: Everything I know about Shiny
 

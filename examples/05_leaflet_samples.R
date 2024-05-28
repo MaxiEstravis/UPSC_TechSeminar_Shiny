@@ -70,7 +70,10 @@ server <- function(input, output, session) {
     if (!is.null(hover)) {
       hover_data <- data() %>%
         filter(Name == hover$id)
-      hover_info(paste("Name:", hover_data$Name, "\nSpecies:", hover_data$Species, "\nLatitude:", hover_data$Latitude, "\nLongitude:", hover_data$Longitude))
+      hover_info(paste("Name:", hover_data$Name, 
+                       "\nSpecies:", hover_data$Species, 
+                       "\nLatitude:", hover_data$Latitude, 
+                       "\nLongitude:", hover_data$Longitude))
     }
   })
   

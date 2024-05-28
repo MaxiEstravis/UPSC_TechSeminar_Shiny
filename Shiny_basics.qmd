@@ -284,3 +284,13 @@ plot_data <- eventReactive(input$actButton, {
 ::: {.fragment}
 ![](end.png){width="50%" fig-align="center"}
 :::
+
+## And for the rest of today's session...
+
+::: {.incremental}
+- We will go through two more (hopefully useful) examples:
+  - An interactive Markdown report
+  - And how to include and play with maps
+- We will look at some examples from the Posit gallery
+- And we'll have questions and comments!
+:::

@@ -415,12 +415,35 @@ Maxi Estravis
 <li class="fragment">R package for creating web apps and interactive documents</li>
 <li class="fragment"><a href="https://shiny.posit.co/r/gallery/">Basic examples</a></li>
 <li class="fragment">Concept of <strong>reactivity</strong></li>
+<li class="fragment">Useful applications:
+<ul>
+<li class="fragment">Making data and results easily explorable</li>
+<li class="fragment">Reports
+<ul>
+<li class="fragment">Changing parameters for plots</li>
+<li class="fragment">Sampling planification</li>
+</ul></li>
+</ul></li>
 </ul>
 </div>
 </div><div class="column" style="width:40%;">
 <p><img data-src="shiny.png" style="width:90.0%"></p>
 </div>
 </div>
+<aside class="notes">
+<p>First and foremost, it’s an R package, loaded at the beginning of your code with the <code>library()</code> command. But it introduces a massive amount of functions and classes, and changes the code flow in a significant way.</p>
+<p>We tend to think of code as static as opposed to reactive. Reactive code is very useful to explore data and results on the fly.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="basic-structure" class="slide level2">
 <h2>Basic structure</h2>
@@ -485,6 +508,7 @@ Maxi Estravis
 <span id="cb2-20"><a href="#cb2-20"></a></span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="fu">shinyApp</span>(<span class="at">ui=</span>ui,<span class="at">server=</span>server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
+<p>Some words about the fluid page layout.</p>
 <p>Built-in input widgets. Each one has a name, quoted in this first definition, followed by other arguments.</p>
 <p>Some typical arguments: label (what the user sees), default values.</p>
 <p>In the <code>server</code> function, these inputs are called by name without quoting.</p>

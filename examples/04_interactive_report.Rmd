@@ -1,0 +1,51 @@
+---
+title: "An interactive report with Shiny"
+author: "UPSC Tech Seminar"
+output:
+  html_document:
+    code_folding: hide
+runtime: shiny
+date: "2024-05-29"
+---
+
+## R Markdown
+
+You can write your report and embed code output as in any Markdown document.
+
+```{r}
+summary(iris$Sepal.Length)
+```
+
+## Including an interactive Shiny app
+
+Now comes the Shiny app:
+
+```{r}
+### From RaukR 2023 Shiny lab
+
+library(shiny)
+library(ggplot2)
+
+shinyApp(
+  ui=fluidPage(
+    titlePanel("Data explorer"),
+    sidebarLayout(
+      sidebarPanel(
+          selectInput("in_x","X axis variable", choices=colnames(iris), selected=colnames(iris)[1]),
+          selectInput("in_y","Y axis variable", choices=colnames(iris), selected=colnames(iris)[2]),
+          selectInput("in_col","Colour variable", choices=colnames(iris), selected=colnames(iris)[5])
+      ),
+      mainPanel(
+        plotOutput("out_plot")
+      )
+    )
+  ),
+  server=function(input,output){
+    output$out_plot <- renderPlot({
+  ggplot(iris, aes(x = !!sym(input$in_x), y = !!sym(input$in_y), col = !!sym(input$in_col))) +
+    geom_point()
+})
+  },
+options = list(height = 1000)
+)
+```

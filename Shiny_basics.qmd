@@ -21,6 +21,11 @@ format:
 - R package for creating web apps and interactive documents
 - [Basic examples](https://shiny.posit.co/r/gallery/)
 - Concept of **reactivity**
+- Useful applications:
+  - Making data and results easily explorable
+  - Reports
+    - Changing parameters for plots
+    - Sampling planification
 :::
 :::
 
@@ -30,6 +35,11 @@ format:
 
 ::::
 
+::: {.notes}
+First and foremost, it's an R package, loaded at the beginning of your code with the `library()` command. But it introduces a massive amount of functions and classes, and changes the code flow in a significant way.
+
+We tend to think of code as static as opposed to reactive. Reactive code is very useful to explore data and results on the fly.
+:::
 
 ## Basic structure
 
@@ -85,6 +95,8 @@ shinyApp(ui=ui,server=server)
 ```
 
 ::: {.notes}
+Some words about the fluid page layout.
+
 Built-in input widgets. Each one has a name, quoted in this first definition, followed by other arguments.
 
 Some typical arguments: label (what the user sees), default values.

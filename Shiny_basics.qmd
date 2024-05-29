@@ -13,6 +13,13 @@ format:
     smaller: true
 ---
 
+## How to make the most out of this seminar
+
+- Open RStudio
+- Go to `File -> New Project -> Version control -> Git`
+- Paste `https://github.com/MaxiEstravis/UPSC_TechSeminar_Shiny` as the repository URL
+- This way you will clone the repository in your local computer and have access to all examples and files
+
 ## What is Shiny?
 :::: {.columns}
 
